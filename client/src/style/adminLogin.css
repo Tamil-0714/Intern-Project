@@ -14,7 +14,7 @@
     flex-direction: column;
     align-items: center;
     position: relative;    
-    outline: 1px solid red;
+    outline: 1px solid black;
 }
 .admin-login-container form {
     width: 100%;
@@ -27,7 +27,12 @@
     margin-top: 30px;
     font-size: 1.1em;
 }
-
+.error{
+    border: 1px solid red;
+}
+.dis-hover:hover{
+    background-color: grey !important;
+}
 .show-hide{
     position: absolute;
     right: 22%;

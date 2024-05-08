@@ -8,6 +8,9 @@ const AdminLogin = () => {
   const [password, setPasword] = useState("");
   const [isShow, setIsShow] = useState(true);
   const [sessionId, setSessionId] = useState(false);
+  const [isButtonDisabled, setIsButtonDisabled] = useState(false);
+  const [cursorStyle, setCursorStyle] = useState("pointer");
+  const [isError, setIsError] = useState(false);
   useEffect(() => {
     const localSessionId = localStorage.getItem("sessionId");
     if (
@@ -40,8 +43,16 @@ const AdminLogin = () => {
         password: password,
         sessionId: false,
       };
+      setIsButtonDisabled(true);
+      setIsError(false);
+      setCursorStyle("not-allowed");
       const res = await axios.post(`${BASE_API_URL}/adminCred`, formData);
       console.log(res.data);
+      if (!res.data.sessionId) {
+        setIsButtonDisabled(false);
+        setCursorStyle("pointer");
+        setIsError(true);
+      }
       handleClientSession(res.data);
     }
   };
@@ -72,7 +83,7 @@ const AdminLogin = () => {
             <input
               type="text"
               placeholder="User Name"
-              className="userName"
+              className={isError ? "userName error" : "userName"}
               name="pass"
               value={userName}
               onChange={(e) => handleUserNameChange(e)}
@@ -80,7 +91,7 @@ const AdminLogin = () => {
             <input
               type={isShow ? "password" : "text"}
               placeholder="Password"
-              className="pass"
+              className={isError ? "pass error" : "pass"}
               name="pass"
               value={password}
               onChange={(e) => handlePasswordChange(e)}
@@ -98,13 +109,24 @@ const AdminLogin = () => {
           <div className="btn-container">
             <button
               type="reset"
-              className="btn btn-reset"
+              className={
+                isButtonDisabled ? "btn btn-reset dis-hover" : "btn btn-reset"
+              }
               onClick={handleReSet}
+              disabled={isButtonDisabled}
+              style={{ cursor: cursorStyle }}
             >
               Reset
             </button>
-            <button className="btn btn-login" type="submit">
-              Login
+            <button
+              className={
+                isButtonDisabled ? "btn btn-login dis-hover" : "btn btn-login"
+              }
+              type="submit"
+              disabled={isButtonDisabled}
+              style={{ cursor: cursorStyle }}
+            >
+              {isButtonDisabled ? "Logging in... Loading" : "Login"}
             </button>
           </div>
         </form>

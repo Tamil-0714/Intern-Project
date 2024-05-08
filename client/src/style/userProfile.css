@@ -1,0 +1,39 @@
+.user-profile-container{
+    outline: 1px solid black;
+    display: flex;
+    height: 60px;
+    width: 300px;
+    justify-content: space-between;
+    padding: 0 10px;
+    margin: 10px 0;
+}
+.user-profile-pic{
+    /* outline: 1px solid green; */
+    width: 30%;
+}
+.user-profile-pic img{
+    width: 50px;
+    margin-top: 5px;
+    border-radius: 50%;
+}
+.user-name-time-container{
+    /* outline: 1px solid blue; */
+    width: 60%;
+    font-size: 1.1em;
+}
+.read-unread-tag{
+    width: 10%;
+    position: relative;
+}
+.active-inactive{
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50% , -50%);
+}
+.active{
+    background-color: green;
+}

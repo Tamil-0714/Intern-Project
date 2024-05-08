@@ -6,6 +6,7 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import AdminLogin from "./routes/AdminLogin.jsx";
 import ErrorRoute from "./routes/ErrorRoute.jsx";
 import AdminPage from "./routes/AdminPage.jsx";
+import UsersProfile from "./components/UsersProfile.jsx";
 
 const router = createBrowserRouter([
   {
@@ -23,6 +24,10 @@ const router = createBrowserRouter([
     element: <AdminPage />,
     errorElement:<ErrorRoute/>
   },
+  {
+    path: "/test",
+    element:<UsersProfile/>
+  }
 ]);
 
 ReactDOM.createRoot(document.getElementById("root")).render(

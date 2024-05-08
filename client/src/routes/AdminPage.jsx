@@ -1,6 +1,8 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
+import ErrorRoute from "./ErrorRoute"
 
 const AdminPage = () => {
+  const [sessionId, setSessionId] = useState(false);
   useEffect(() => {
     const localSessionId = localStorage.getItem("sessionId");
     console.log(localSessionId);
@@ -10,10 +12,12 @@ const AdminPage = () => {
       localSessionId === null
     ) {
       location.href = "/admin";
+    } else {
+      setSessionId(localSessionId);
     }
   }, []);
   return (
-    <div>
+    !sessionId? <ErrorRoute/>: <div>
       <h2>admin acces page</h2>
       <button
         onClick={() => {
