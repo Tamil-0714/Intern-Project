@@ -4,7 +4,7 @@ const app = express();
 const PORT = 3000;
 const cors = require("cors");
 const bcrypt = require("bcrypt");
-const { fetchUser, updateSessionId } = require("./DB/DB");
+const { fetchUser, updateSessionId, fetchUserWithSession, gatherUsers } = require("./DB/DB");
 
 app.use(cors());
 app.use(express.json());
@@ -35,9 +35,23 @@ app.post("/adminCred", async (req, res) => {
       res.send({ sessionId: false });
     }
   } else {
-    console.log("Will do something else lateer");
+    res.send({ isOk: await validateSession(sessionId) });
   }
 });
+
+app.post("/users", async (req, res) => {
+  if(await validateSession(req.body.sessionId)){
+    const users = await gatherUsers()
+    res.send(users)
+  }
+});
+
+const validateSession = async (s) => {
+  const result = await fetchUserWithSession(s);
+  console.log(result);
+  if (result.length > 0) return true;
+  return false;
+};
 
 const generateSession = () => {
   const str = "#XxYyZzJjIiLlUu123*54!^Tt";

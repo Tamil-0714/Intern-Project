@@ -47,20 +47,42 @@ async function fetchUser(id) {
     throw error;
   }
 }
-
-async function updateSessionId(sessionId, id){
+async function fetchUserWithSession(session) {
   try {
-    const query = `UPDATE admin SET sessionId = ? WHERE userName = ?`
+    const query = "SELECT * FROM admin WHERE sessionId = ?";
+    const params = [session];
+    const rows = await queryDB(query, params);
+    return rows;
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
+}
+
+async function updateSessionId(sessionId, id) {
+  try {
+    const query = `UPDATE admin SET sessionId = ? WHERE userName = ?`;
     const params = [sessionId, id];
-    const rows = await queryDB(query,params);
+    const rows = await queryDB(query, params);
+    return rows;
+  } catch (error) {
+    console.error(error);
+  }
+}
+async function gatherUsers(){
+  try {
+    const query = 'SELECT * FROM users'
+    const params = null
+    const rows = await queryDB(query,params)
     return rows
   } catch (error) {
     console.error(error);
   }
 }
 
-
 module.exports = {
-    fetchUser,
-     updateSessionId
-}
+  fetchUser,
+  updateSessionId,
+  fetchUserWithSession,
+  gatherUsers
+};

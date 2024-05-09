@@ -1,18 +1,55 @@
-import React from 'react'
-import UserProfile from './UserProfile'
-import test_profile from "../assets/img/test_profile.jpeg"
-import "../style/usersProfile.css"
+import React from "react";
+import UserProfile from "./UserProfile";
+import test_profile from "../assets/img/test_profile.jpeg";
+import "../style/usersProfile.css";
 
-const UsersProfile = () => {
+const UsersProfile = ({ users }) => {
+  console.log(users);
   return (
-    <div className='users-container'>
-      <UserProfile  profile={test_profile} name={"Tamil N"} time={"Yesterdat"} isActive={true}/>
-      <UserProfile  profile={test_profile} name={"something K"} time={"Two week ago"} isActive={true}/>
-      <UserProfile  profile={test_profile} name={"NOthing L"} time={"today"} isActive={true}/>
-      <UserProfile  profile={test_profile} name={"ANything I"} time={"3 day ago"} isActive={false}/>
-      <UserProfile  profile={test_profile} name={"Manything O"} time={"Yesterdat"} isActive={false}/>
+    <div className="users-container">
+      {/* <UserProfile  profile={test_profile} name={"Tamil N"} time={"Yesterdat"} isActive={true}/> */}
+      {users.map((user) => {
+        return (
+          <UserProfile
+            key={user.userId} 
+            profile={user.profileLink}
+            name={user.userName}
+            time={user.activeTime}
+            isActive={JSON.parse(user.isActive)}
+          />
+        );
+      })}
     </div>
-  )
-}
+  );
+};
 
-export default UsersProfile
+export default UsersProfile;
+
+/**
+ [
+    {
+        "userId": "firstUser",
+        "userName": "Tamil",
+        "password": "$2a$12$zl/FkHELp6jf.z62warYxuo6MEz4Zfjb5U8a3BmSi33lOBdxVnery",
+        "profileLink": "no link",
+        "activeTime": "5 hours ago",
+        "isActive": "false"
+    },
+    {
+        "userId": "nice",
+        "userName": "password",
+        "password": "$2a$12$Zt2hqU2bvovlQM5XTO1xMexHBB3JaHz6a4ZvzOy0gltRiOfLE9nzq",
+        "profileLink": "no link 7",
+        "activeTime": "Yesterday",
+        "isActive": "true"
+    },
+    {
+        "userId": "someUser",
+        "userName": "Enn peru",
+        "password": "$2a$12$mFSmHNKwUbYAQ..sr7m6T.VXae.0de5my864JCgWJxnMXBhiA2H/a",
+        "profileLink": "no link 1",
+        "activeTime": "9 hours ago",
+        "isActive": "true"
+    }
+]
+ */
