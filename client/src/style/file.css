@@ -1,0 +1,39 @@
+.file-container{
+    width: 300px;
+    height: 40px;
+    outline: 1px solid #000;
+    margin: 10px 5px;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    padding: 0 10px; 
+    cursor: auto;
+}
+
+.file-name-extension{
+    width: 60%;
+    height: 29px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.file-name{
+    display: -webkit-box;
+    -webkit-line-clamp:1;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    width: 60%;
+}
+.btn-container{
+    margin: 0;  
+    width: 40%;
+    justify-content: space-around;
+}
+.btn{
+    cursor: pointer;
+}
+
+/* .btn{
+    width: 120px;
+} */

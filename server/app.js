@@ -4,8 +4,14 @@ const app = express();
 const PORT = 3000;
 const cors = require("cors");
 const bcrypt = require("bcrypt");
-const { fetchUser, updateSessionId, fetchUserWithSession, gatherUsers } = require("./DB/DB");
-
+const {
+  fetchUser,
+  updateSessionId,
+  fetchUserWithSession,
+  gatherUsers,
+} = require("./DB/DB");
+const path = require("path");
+const fs = require("fs");
 app.use(cors());
 app.use(express.json());
 
@@ -40,15 +46,31 @@ app.post("/adminCred", async (req, res) => {
 });
 
 app.post("/users", async (req, res) => {
-  if(await validateSession(req.body.sessionId)){
-    const users = await gatherUsers()
-    res.send(users)
+  if (await validateSession(req.body.sessionId)) {
+    const users = await gatherUsers();
+    const usersWithImages = await Promise.all(
+      users.map(async (user) => {
+        const imgPath = path.join(__dirname, user.profileLink);
+        const imgBuffer = await fs.promises.readFile(imgPath);
+        const base64Image = imgBuffer.toString("base64");
+        return {
+          ...user,
+          profileLink: `data:image/jpeg;base64,${base64Image}`,
+        };
+      })
+    );
+    res.json(usersWithImages);
+
+    // console.log(users)
+    // const imgPath = path.join(__dirname, 'src/img', 'test_profile.jpeg')
+    // const imgStream = fs.createReadStream(imgPath)
+    // imgStream.pipe(res)
+    // res.send(users)   /src/img/test_profile.jpeg
   }
 });
 
 const validateSession = async (s) => {
   const result = await fetchUserWithSession(s);
-  console.log(result);
   if (result.length > 0) return true;
   return false;
 };

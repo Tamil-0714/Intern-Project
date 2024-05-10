@@ -1,3 +1,7 @@
+
+
+// Now you can use FontAwesomeIcon component in your application
+
 import { useState } from 'react'
 import './App.css'
 

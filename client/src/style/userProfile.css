@@ -5,7 +5,11 @@
     width: 300px;
     justify-content: space-between;
     padding: 0 10px;
+    cursor: pointer;
     margin: 10px 0;
+}
+.selected-user{
+    position: relative;
 }
 .user-profile-pic{
     /* outline: 1px solid green; */
@@ -20,6 +24,9 @@
     /* outline: 1px solid blue; */
     width: 60%;
     font-size: 1.1em;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
 }
 .read-unread-tag{
     width: 10%;

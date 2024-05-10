@@ -1,17 +1,26 @@
-import React from "react";
+import React, { useState } from "react";
 import UserProfile from "./UserProfile";
-import test_profile from "../assets/img/test_profile.jpeg";
 import "../style/usersProfile.css";
-
 const UsersProfile = ({ users }) => {
-  console.log(users);
+  const [selectedIndex, setSelectedIndex] = useState(null);
+  const handleUserOnclick = (user) => {
+    console.log(user);
+  };
+
+  const handleClick = (index) => {
+    setSelectedIndex(index === selectedIndex ? null : index);
+  };
+
   return (
     <div className="users-container">
-      {/* <UserProfile  profile={test_profile} name={"Tamil N"} time={"Yesterdat"} isActive={true}/> */}
-      {users.map((user) => {
+      {users.map((user,index) => {
         return (
           <UserProfile
-            key={user.userId} 
+            key={user.userId}
+            userId={user.userId}
+            index={index}
+            isSelected={selectedIndex === index}
+            handleClick={handleClick}
             profile={user.profileLink}
             name={user.userName}
             time={user.activeTime}
