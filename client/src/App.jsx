@@ -11,7 +11,7 @@ function App() {
   return (
     <>
       <div>
-        <a href="/admin">Login as Admin</a>
+        <a href="/adminPage">Admin Page</a>
       </div>
     </>
   )

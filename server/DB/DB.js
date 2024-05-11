@@ -79,10 +79,21 @@ async function gatherUsers(){
     console.error(error);
   }
 }
+async function getFilesInfo(userId){
+  try {
+    const query = 'SELECT * FROM files WHERE userId= ?'
+    const params = [userId]
+    const rows = await queryDB(query,params)
+    return rows
+  } catch (error) {
+    console.error(error);
+  }
+}
 
 module.exports = {
   fetchUser,
   updateSessionId,
   fetchUserWithSession,
-  gatherUsers
+  gatherUsers,
+  getFilesInfo
 };

@@ -9,6 +9,7 @@ const {
   updateSessionId,
   fetchUserWithSession,
   gatherUsers,
+  getFilesInfo,
 } = require("./DB/DB");
 const path = require("path");
 const fs = require("fs");
@@ -60,12 +61,35 @@ app.post("/users", async (req, res) => {
       })
     );
     res.json(usersWithImages);
+  }
+});
 
-    // console.log(users)
-    // const imgPath = path.join(__dirname, 'src/img', 'test_profile.jpeg')
-    // const imgStream = fs.createReadStream(imgPath)
-    // imgStream.pipe(res)
-    // res.send(users)   /src/img/test_profile.jpeg
+app.post("/files", async (req, res) => {
+  // Check if the request is authenticated
+  // { userId: 'nice', sessiodId: '35JL4i!Xjz4X5^J*' }
+  const { userId, sessionId } = req.body;
+  if (await validateSession(sessionId)) {
+    try {
+      const files = await getFilesInfo(userId);
+      const filesPromises = files.map(async(file, i) => {
+        const filePath = file.fileLink;
+        const { name: fileName, ext: fileExtension } = path.parse(filePath);
+        const fileBlob = await readFileAsBlob(filePath);
+        const fileBase64 = fileBlob.toString('base64');
+        return {
+          fileName,
+          fileExtension: fileExtension.slice(1), // Remove the leading dot from extension
+          fileBase64,
+        }
+      });
+      const resFile = await Promise.all(filesPromises)
+      res.json(resFile)
+    } catch (error) {
+      console.error("Error:", error);
+      res.status(500).json({ error: "Internal Server Error" });
+    }
+  } else {
+    res.status(403).json({ error: "Unauthorized" });
   }
 });
 
@@ -83,6 +107,10 @@ const generateSession = () => {
   }
   return usrky;
 };
+
+function readFileAsBlob(filePath) {
+  return fs.promises.readFile(path.join(__dirname,filePath));
+}
 
 app.listen(PORT, () => {
   console.log(`app running on http://localhost:${PORT}`);

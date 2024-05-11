@@ -28,6 +28,9 @@
     flex-direction: column;
     justify-content: center;
 }
+.user-name{
+    font-size: 0.9em;
+}
 .read-unread-tag{
     width: 10%;
     position: relative;

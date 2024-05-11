@@ -8,22 +8,39 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 library.add(faCommentDots, faFileArrowDown);
 
-const File = () => {
-  const extractFileNameAndExtension = (path) => {
-    const parts = path.split("/");
-    const filenameWithExtension = parts[parts.length - 1];
-    const filenameParts = filenameWithExtension.split(".");
-    const filename = filenameParts.slice(0, -1).join(".");
-    const extension = filenameParts[filenameParts.length - 1];
+const File = ({ fileBase64, fileExtension, fileName }) => {
+  const handleFileDownload = async () => {
+    // Convert Base64 string to Blob
+    console.log("file downloaded");
+    const byteCharacters = atob(fileBase64);
+    const byteNumbers = new Array(byteCharacters.length);
+    for (let i = 0; i < byteCharacters.length; i++) {
+      byteNumbers[i] = byteCharacters.charCodeAt(i);
+    }
+    const byteArray = new Uint8Array(byteNumbers);
+    const blob = new Blob([byteArray], {
+      type: `application/${fileExtension}`,
+    });
 
-    return { filename, extension };
+    // Create a download link
+    const url = window.URL.createObjectURL(blob);
+    const link = document.createElement("a");
+    link.href = url;
+    link.download = `${fileName}.${fileExtension}`;
+    document.body.appendChild(link);
+
+    // Trigger the download
+    link.click();
+
+    // Clean up
+    window.URL.revokeObjectURL(url);
+    document.body.removeChild(link);
   };
-
   return (
     <div className="file-container">
       <div className="file-name-extension">
-        <span className="file-name">Document some times this is so long</span>
-        <span className="extension">.docx</span>
+        <span className="file-name">{fileName}</span>
+        <span className="extension">{"." + fileExtension}</span>
       </div>
       <div className="btn-container">
         <FontAwesomeIcon
@@ -36,6 +53,7 @@ const File = () => {
           icon={faFileArrowDown}
           size="2x"
           className="btn btn-download"
+          onClick={handleFileDownload}
           style={{ color: "#1d99ff" }}
         />
       </div>
