@@ -5,8 +5,9 @@ import { library } from "@fortawesome/fontawesome-svg-core";
 import {
   faCommentDots,
   faFileArrowDown,
+  faFilePdf
 } from "@fortawesome/free-solid-svg-icons";
-library.add(faCommentDots, faFileArrowDown);
+library.add(faCommentDots, faFileArrowDown, faFilePdf);
 
 const File = ({ fileBase64, fileExtension, fileName }) => {
   const handleFileDownload = async () => {
@@ -38,23 +39,26 @@ const File = ({ fileBase64, fileExtension, fileName }) => {
   };
   return (
     <div className="file-container">
+        <div className="doc-icon">
+        <FontAwesomeIcon
+          icon={faFilePdf}
+          size="3x"
+          className="btn-msg btn"
+          style={{ color: "#000000" }}
+        />
+        </div>
       <div className="file-name-extension">
         <span className="file-name">{fileName}</span>
         <span className="extension">{"." + fileExtension}</span>
       </div>
-      <div className="btn-container">
-        <FontAwesomeIcon
-          icon={faCommentDots}
-          size="2x"
-          className="btn-msg btn"
-          style={{ color: "#1d99ff" }}
-        />
+      <div className="file-btn-container">
+        
         <FontAwesomeIcon
           icon={faFileArrowDown}
-          size="2x"
+          size="3x"
           className="btn btn-download"
           onClick={handleFileDownload}
-          style={{ color: "#1d99ff" }}
+          style={{ color: "#169198" }}
         />
       </div>
     </div>

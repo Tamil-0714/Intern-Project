@@ -6,7 +6,8 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import AdminLogin from "./routes/AdminLogin.jsx";
 import ErrorRoute from "./routes/ErrorRoute.jsx";
 import AdminPage from "./routes/AdminPage.jsx";
-import Files from "./components/Files.jsx";
+import Search_a_Name from "./components/Search_a_Name.jsx";
+
 
 const router = createBrowserRouter([
   {
@@ -26,7 +27,7 @@ const router = createBrowserRouter([
   },
   {
     path: "/test",
-    element:<Files  />
+    element:<Search_a_Name/>
   }
 ]);
 

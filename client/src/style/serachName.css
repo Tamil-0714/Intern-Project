@@ -1,0 +1,29 @@
+.search-name-container{
+    outline: 1px solid red;
+    height: 78px;
+}
+
+.search-container{
+    position: absolute;
+    display: flex ;
+    
+}
+.btn-x, .btn-search{
+    position: relative;
+
+}
+.btn-x{
+    left: 40px;
+    top: 16.5px;
+}
+.btn-search{
+    right: 60px;
+    top: 16.5px;
+}
+.search-bar input{
+    height: 49px;
+    width: 342.7px;
+    margin: 10px;
+    padding-left: 55px;
+    font-size: 1.1em;
+}

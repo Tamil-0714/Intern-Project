@@ -1,23 +1,17 @@
 import React, { useState } from "react";
 import "../style/userProfile.css";
-import Files from "./Files";
 import axios from "axios";
 import { BASE_API_URL } from "../assests";
 const UserProfile = ({
   profile,
   name,
-  index,
   time,
-  isSelected,
   isActive,
-  handleClick,
   userId,
+  setFileData
 }) => {
-  // const [selected, setSelected] = useState(false)
-  // const handleUserClick = () => {
-  //   setSelected(!selected)
-  // }
-  const [fileData, setFileData] = useState([]);
+  const [isSelected, setIsSelected] = useState(false)
+  // const [fileData, setFileData] = useState([]);
   const fetchUserFiles = async (userId) => {
     const formData = {
       userId: userId,
@@ -35,22 +29,20 @@ const UserProfile = ({
           : "user-profile-container"
       }
       onClick={async () => {
-        // handleUserOnClick[0](handleUserOnClick[1]);
         console.log(userId);
         await fetchUserFiles(userId);
-        handleClick(index);
+        setIsSelected(!isSelected)
       }}
     >
       {/* <Files/> */}
-      {isSelected && fileData.length > 0 && (
-        <Files userId={userId} fileData={fileData} />
-      )}
+      
       <div className="user-profile-pic">
         <img src={profile} alt="" />
       </div>
       <div className="user-name-time-container">
-        <div className="user-name">{name}</div>
+        <div className="user-name"><h3>{name}</h3></div>
         <div className="user-time">{time}</div>
+        <p className="user-msg">Some text to describe some dummy message and fuck you .......</p>
       </div>
       <div className="read-unread-tag">
         <div

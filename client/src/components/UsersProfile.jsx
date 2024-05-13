@@ -1,33 +1,48 @@
 import React, { useState } from "react";
 import UserProfile from "./UserProfile";
 import "../style/usersProfile.css";
+import Files from "./Files";
 const UsersProfile = ({ users }) => {
-  const [selectedIndex, setSelectedIndex] = useState(null);
-  const handleUserOnclick = (user) => {
-    console.log(user);
-  };
-
-  const handleClick = (index) => {
-    setSelectedIndex(index === selectedIndex ? null : index);
-  };
+  const [fileData, setFileData] = useState([]);
 
   return (
     <div className="users-container">
-      {users.map((user,index) => {
-        return (
-          <UserProfile
-            key={user.userId}
-            userId={user.userId}
-            index={index}
-            isSelected={selectedIndex === index}
-            handleClick={handleClick}
-            profile={user.profileLink}
-            name={user.userName}
-            time={user.activeTime}
-            isActive={JSON.parse(user.isActive)}
-          />
-        );
-      })}
+      {/* <div className="search-container">
+        <div className="serach-icon"></div>
+        <div className="search-bar">
+          <input type="search" name="search-bar" id="" />
+        </div>
+        <div className="clear-icon"></div>
+      </div> */}
+      <div className="user-indu-data">
+        {users.map((user, index) => {
+          return (
+            <>
+              <UserProfile
+                key={user.userId}
+                userId={user.userId}
+                setFileData={setFileData}
+                profile={user.profileLink}
+                name={user.userName}
+                time={user.activeTime}
+                isActive={JSON.parse(user.isActive)}
+              />
+              {/* <UserProfile
+                key={user.userId}
+                userId={user.userId}
+                setFileData={setFileData}
+                profile={user.profileLink}
+                name={user.userName}
+                time={user.activeTime}
+                isActive={JSON.parse(user.isActive)}
+              /> */}
+            </>
+          );
+        })}
+      </div>
+      <div className="files-component-container">{ fileData.length > 0 && (
+        <Files userId={users.userId} fileData={fileData} />
+      )}</div>
     </div>
   );
 };
