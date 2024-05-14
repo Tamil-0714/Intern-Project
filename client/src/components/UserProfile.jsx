@@ -8,7 +8,8 @@ const UserProfile = ({
   time,
   isActive,
   userId,
-  setFileData
+  setFileData,
+  handleLocals
 }) => {
   const [isSelected, setIsSelected] = useState(false)
   // const [fileData, setFileData] = useState([]);
@@ -30,6 +31,7 @@ const UserProfile = ({
       }
       onClick={async () => {
         console.log(userId);
+        handleLocals(name,time,profile)
         await fetchUserFiles(userId);
         setIsSelected(!isSelected)
       }}

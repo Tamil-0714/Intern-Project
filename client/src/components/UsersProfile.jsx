@@ -1,21 +1,31 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import UserProfile from "./UserProfile";
 import "../style/usersProfile.css";
 import Files from "./Files";
-const UsersProfile = ({ users }) => {
+import Search_a_Name from "./Search_a_Name";
+const UsersProfile = ({ _users }) => {
+  const [users, setUsers] = useState([])
+  useEffect(()=>{
+    setUsers(_users)
+  },[_users])
   const [fileData, setFileData] = useState([]);
-
+  const [loaclName, setLoaclName] = useState("")
+  const [localTime, setLocalTime] = useState("")
+  const [localImg, setLocalImg] = useState(null)
+  const handleLocals = (name, time, img)=>{
+    setLoaclName(name)
+    setLocalTime(time)
+    setLocalImg(img)
+  }
   return (
+    <div className="outer-user-container">
+      <div className="serarch-wrapper">
+        <Search_a_Name name={loaclName} time={localTime} img={localImg} setUsers={setUsers} users={_users} />
+      </div>
     <div className="users-container">
-      {/* <div className="search-container">
-        <div className="serach-icon"></div>
-        <div className="search-bar">
-          <input type="search" name="search-bar" id="" />
-        </div>
-        <div className="clear-icon"></div>
-      </div> */}
-      <div className="user-indu-data">
-        {users.map((user, index) => {
+      <div className="user-indu-data" key={Math.random()*100}>
+        
+        { users.length>0 && users.map((user, index) => {
           return (
             <>
               <UserProfile
@@ -23,19 +33,11 @@ const UsersProfile = ({ users }) => {
                 userId={user.userId}
                 setFileData={setFileData}
                 profile={user.profileLink}
+                handleLocals={handleLocals}
                 name={user.userName}
                 time={user.activeTime}
                 isActive={JSON.parse(user.isActive)}
               />
-              {/* <UserProfile
-                key={user.userId}
-                userId={user.userId}
-                setFileData={setFileData}
-                profile={user.profileLink}
-                name={user.userName}
-                time={user.activeTime}
-                isActive={JSON.parse(user.isActive)}
-              /> */}
             </>
           );
         })}
@@ -43,6 +45,7 @@ const UsersProfile = ({ users }) => {
       <div className="files-component-container">{ fileData.length > 0 && (
         <Files userId={users.userId} fileData={fileData} />
       )}</div>
+    </div>
     </div>
   );
 };

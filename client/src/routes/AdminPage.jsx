@@ -64,7 +64,7 @@ const AdminPage = () => {
         </button>
       </div>
       <div className="right-container">
-        <UsersProfile users={users} />
+        <UsersProfile _users={users} />
       </div>
     </div>
   );
